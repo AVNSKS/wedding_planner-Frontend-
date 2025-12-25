@@ -152,21 +152,37 @@ const CoupleDashboard = () => {
                 </div>
               </div>
               
-              <Link 
-                to="/couple/events" 
-                className="group relative bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-2xl p-8 text-center min-w-[220px] shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
-                title="View Itinerary"
-              >
-                <div className="text-5xl font-serif font-bold mb-2 text-slate-800 group-hover:text-rose-500 transition-colors">
-                  {wedding.daysUntilWedding}
-                </div>
-                <div className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600 transition-colors">
-                  Days To Go
-                </div>
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight className="w-4 h-4 text-rose-500" />
-                </div>
-              </Link>
+              {/* Only show countdown if wedding hasn't happened yet OR if there's pending payment */}
+              {(wedding.daysUntilWedding >= 0 || data.budgets.remaining < 0) && (
+                <Link 
+                  to={wedding.daysUntilWedding < 0 ? "/couple/budgets" : "/couple/events"}
+                  className="group relative bg-white hover:bg-rose-50 border border-rose-100 hover:border-rose-300 rounded-2xl p-8 text-center min-w-[220px] shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105"
+                  title={wedding.daysUntilWedding < 0 ? "Pending Payment" : "View Itinerary"}
+                >
+                  {wedding.daysUntilWedding >= 0 ? (
+                    <>
+                      <div className="text-5xl font-serif font-bold mb-2 text-slate-800 group-hover:text-rose-500 transition-colors">
+                        {wedding.daysUntilWedding}
+                      </div>
+                      <div className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600 transition-colors">
+                        Days To Go
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-3xl font-serif font-bold mb-2 text-red-500 group-hover:text-red-600 transition-colors">
+                        ₹{Math.abs(data.budgets.remaining).toLocaleString()}
+                      </div>
+                      <div className="text-xs font-bold uppercase tracking-[0.2em] text-red-400 group-hover:text-red-600 transition-colors">
+                        Payment Pending
+                      </div>
+                    </>
+                  )}
+                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowRight className="w-4 h-4 text-rose-500" />
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         ) : (
