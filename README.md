@@ -63,5 +63,12 @@ Follow these steps to run the project locally.
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/yourusername/wedvow.git](https://github.com/yourusername/wedvow.git)
+git clone https://github.com/AVNSKS/wedding_planner-Frontend-.git
 cd wedvow
+### 2. Install Dependencies
+
+npm install
+# Ensure animation libraries are installed
+npm install framer-motion clsx tailwind-merge
+npm run dev
+```
